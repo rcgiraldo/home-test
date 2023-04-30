@@ -19,7 +19,7 @@ export class CommitsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commitsService.findOne(+id);
+    return this.commitsService.findOne(id);
   }
 
   @Patch(':id')

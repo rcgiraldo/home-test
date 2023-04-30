@@ -25,14 +25,22 @@ export class CommitsService {
 		}
 		catch(error){
 			throw error;
-
-		}
-	
-    
+		}    
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} commit`;
+  async findOne(id: string) {
+		let url = "https://api.github.com/repos/rcgiraldo/home-test/commits/" + id;
+
+		try{
+			const response = await firstValueFrom(
+				this.httpService.get(url)
+			)
+			return response.data
+		}
+		catch(error){
+			throw error;
+		}
+		
   }
 
   update(id: number, updateCommitDto: UpdateCommitDto) {
