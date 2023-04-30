@@ -1,15 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCommitDto } from './dto/create-commit.dto';
 import { UpdateCommitDto } from './dto/update-commit.dto';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class CommitsService {
+
+	constructor(private readonly httpService: HttpService) {}
+
   create(createCommitDto: CreateCommitDto) {
     return 'This action adds a new commit';
   }
 
-  findAll() {
-    return `This action returns all commits`;
+  public async findAll() {
+
+		let url = "https://api.github.com/repos/rcgiraldo/home-test/commits"
+
+		try{
+			const response = await firstValueFrom(
+				this.httpService.get(url)
+			)
+			return response.data
+		}
+		catch(error){
+			throw error;
+
+		}
+	
+    
   }
 
   findOne(id: number) {
